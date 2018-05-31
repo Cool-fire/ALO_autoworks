@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ALO</string>
+    <string name="heading">Signing up is fast and easy</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>
