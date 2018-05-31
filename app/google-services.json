@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "808851010726",
+    "firebase_url": "https://alo-autoworks-5c009.firebaseio.com",
+    "project_id": "alo-autoworks-5c009",
+    "storage_bucket": "alo-autoworks-5c009.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808851010726:android:ddaff5870f9a92d4",
+        "android_client_info": {
+          "package_name": "com.aloautoworks.alo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "808851010726-1bab7ar0srgnu2m8hcgivqm4aicaivao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aloautoworks.alo",
+            "certificate_hash": "cc37b8f25405d571856fc6eb1e1c9184d5529bc8"
+          }
+        },
+        {
+          "client_id": "808851010726-13jeap97346796rqhrs4rs3rsjpn6jnb.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "808851010726-13jeap97346796rqhrs4rs3rsjpn6jnb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDVAwn2vZZuXD2CD-839evcERsh5QUhZM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "808851010726-13jeap97346796rqhrs4rs3rsjpn6jnb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
