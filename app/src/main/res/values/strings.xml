@@ -4,4 +4,18 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="appClient">808851010726-13jeap97346796rqhrs4rs3rsjpn6jnb.apps.googleusercontent.com</string>
+    <string name="name">Name</string>
+    <string name="phone">phone number</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_quote_main">QuoteMainActivity</string>
+    <string name="mapsApiKey">AIzaSyC4DupPhVLpv2CHpIwoZiEf7iK4opedQrg</string>
+    <string name="title_activity_maps">Map</string>
+
 </resources>
