@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.aloautoworks.alo.models.vehicle;
@@ -18,18 +20,33 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.util.ArrayList;
+
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class RegistrationActivity extends AppCompatActivity {
 
 
     String[] VEHICLELIST = {"Car", "Motorcycle", "Bus", "Truck"};
-    String[] MANUFACTURERLIST = {"Isuzu", "chevrolet", "suzuki", "maruthi"};
+    String[] MANUFACTURERLIST = {"Hyundai", "maruthi suzuki", "Ford", "mahindra","Tata motors","Toyota","Volkswagen","Skoda","Rolls royce","Renault"};
+    String[] HyndaiList = {"EON", "SANTRO","XING", "I10", "GRAND I10","I20", "VERNA", "ELANTRA", "SONATA", "SANTA FE", "BALENO", "CRETA"};
+    String[] SuzukiList = {"ALTO 800", "ALTO K10", "CELERIO", "CIAZ", "DZIRE","EECO", "ERTIGA", "VITARA", "GYPSY", "OMNI", "RITZ", "STINGRAY", "SWIFT", "WAGONR"};
+    String[] FordList = {"FORD CLASSIC", "FORD ECOSPORT SUV","ENDEAVOUR SUV", "FORD FIESTA" , "FORD FIGO."};
+    String[] MahindraList = {"MAHINDRA BOLERO", "QUANTO" , "REVO E20" , "SCORPIO", "THAR", "VERITO", "VERITO VIBE", "XUV500", "XYLO"};
+    String[] TataList = {"NANO", "BOLT", "ZEST", "INDICA", "MANZA", "INDIGO ECS", "INDIGO XL", "SAFARI STORME", "SAFARI DICOR", "SUMO GOLD", "MOVUS", "ARIA"};
+    String[] ToyotaList ={"TOYOTA ETIOS LIVA", "ETIOS SEDAN", "ETIOS CROSS", "INNOVA", "COROLLA ALTIS", "FORTUNER", "CAMRY", "PRIUS", "PRADO" , "LAND CRUIZER"};
+    String[] VolkswagenList = {"VOLKSWAGEN NEW POLO", "VW POLO GT", "CROSS POLO", "JETTA", "NEW VENTO", "VENTO KONEKT", "VENTO TSI", "VENTO"};
+    String[] SkodaList = {"SKODA FABIA", "SKODA OCTAVIA", "SKODA RAPID","SKODA SUPERB", "SKODA YETI."};
+    String[] RollsList = {"ROLLS ROYCE GHOST","ROLLS ROYCE PHANTOM", "ROLLS ROYCE WRAITH"};
+    String[] RenaultList = {"RENAULT DUSTER", "RENAULT FLUENCE","RENAULT KOLEOS", "RENAULT PULSE", "RENAULT SCALA"};
+    String[][] arrayList = new String[][]{HyndaiList, SuzukiList,FordList,MahindraList,TataList,ToyotaList,VolkswagenList,SkodaList,RollsList,RenaultList};
+    String[] dummyList = {""};
+
     private MaterialBetterSpinner vehicleSpinner;
     private ArrayAdapter<String> vehiclelAdapter;
     private MaterialBetterSpinner manufacturerSpinner;
     private ArrayAdapter<String> manufacturerAdapter;
-    private TextInputEditText model;
+    private MaterialBetterSpinner model;
     private TextInputEditText fuel;
     private Button registerBttn;
     private DatabaseReference vehicleReference;
@@ -59,8 +76,24 @@ public class RegistrationActivity extends AppCompatActivity {
         manufacturerSpinner = (MaterialBetterSpinner)findViewById(R.id.manufacturer);
         manufacturerSpinner.setAdapter(manufacturerAdapter);
 
-        model = (TextInputEditText)findViewById(R.id.model);
+
+        ArrayAdapter<String> dummyAdapter = getArrayList(dummyList);
+        model = (MaterialBetterSpinner)findViewById(R.id.model);
+        model.setAdapter(dummyAdapter);
         fuel = (TextInputEditText)findViewById(R.id.petrol);
+
+
+        manufacturerSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                ArrayAdapter<String> NewAdapter;
+                NewAdapter = getArrayList(arrayList[i]);
+                model.setAdapter(NewAdapter);
+
+            }
+        });
 
         //registerBttn = (Button)findViewById(R.id.register);
         registerCircularBttn = (CircularProgressButton)findViewById(R.id.register);
@@ -107,6 +140,7 @@ public class RegistrationActivity extends AppCompatActivity {
             if(modelNo.isEmpty())
             {
                 model.setError("model required");
+
             }
             if (fuelquantity.isEmpty())
             {

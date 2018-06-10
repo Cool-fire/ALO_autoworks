@@ -78,8 +78,8 @@ public class UpdateEmailUser extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.hasChild(uid))
                     {
-                        mDatabase.child(uid).child("Name").setValue(Name);
-                        mDatabase.child(uid).child("Phone").setValue(Phone);
+                        mDatabase.child("users").child(uid).child("Name").setValue(Name);
+                        mDatabase.child("users").child(uid).child("Phone").setValue(Phone);
                         stopDialog();
                         checkForUservehicle(new UpdateEmailUser.getVehicleresult() {
                             @Override
@@ -99,7 +99,7 @@ public class UpdateEmailUser extends AppCompatActivity {
                     else if(!dataSnapshot.hasChild(uid))
                     {
                         UserModel userModel = new UserModel(uid,Name,Email,Phone);
-                        mDatabase.child(uid).setValue(userModel);
+                        mDatabase.child("users").child(uid).setValue(userModel);
                         stopDialog();
                         registrationIntent();
                     }

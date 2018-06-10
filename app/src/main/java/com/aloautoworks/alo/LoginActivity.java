@@ -320,6 +320,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     Intent intent = new Intent(getApplicationContext(),UpdateEmailUser.class);
                                     startActivity(intent);
+                                    finish();
 
 
                             }
@@ -334,11 +335,13 @@ public class LoginActivity extends AppCompatActivity {
                                         {
                                             Intent intent = new Intent(getApplicationContext(),QuoteMainActivity.class);
                                             startActivity(intent);
+                                            finish();
                                         }
                                         else
                                         {
                                             Intent intent = new Intent(LoginActivity.this,RegistrationActivity.class);
                                             startActivity(intent);
+                                            finish();
                                         }
                                     }
                                 });
@@ -390,6 +393,10 @@ public class LoginActivity extends AppCompatActivity {
                     {
                         getVehicleresult.checkVehicle("true");
                         Log.d("TAG", "onDataChange: e"+ flag[0]);
+                    }
+                    else
+                    {
+                        getVehicleresult.checkVehicle("false");
                     }
                 }
                 else

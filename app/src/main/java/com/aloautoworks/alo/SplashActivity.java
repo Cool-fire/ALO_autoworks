@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.aloautoworks.alo.models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -52,22 +53,23 @@ public class SplashActivity extends AppCompatActivity {
     private void checkForDataInFirebase(FirebaseUser user) {
 
         final String uid = user.getUid();
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference postref = mDatabase.child("users");
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference postref = mDatabase;
+
         postref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(uid))
+                if(dataSnapshot.child("users").hasChild(uid) && dataSnapshot.child("user vehicles").child(uid).hasChildren())
                 {
-                    postref.child(uid).child("Name").addListenerForSingleValueEvent(new ValueEventListener() {
+                    postref.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
-                        private String value;
+                        private UserModel value;
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            value = dataSnapshot.getValue(String.class);
+                            value = dataSnapshot.getValue(UserModel.class);
                             Log.d("TAG", "onDataChange: event "+value.toString());
-                            if(value.toString().equals("none"))
+                            if(value.Name.toString().equals("none") || value.Phone.toString().equals("none"))
                             {
                                 Log.d("TAG", "onDataChange: even1t "+value.toString());
 
@@ -96,9 +98,21 @@ public class SplashActivity extends AppCompatActivity {
                     });
 
                 }
-                else if(!dataSnapshot.hasChild(uid))
+                else if(!dataSnapshot.child("users").hasChild(uid))
                 {
                     Log.d("TAG", "onDataChange: else");
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if(!dataSnapshot.child("user vehicles").child(uid).hasChildren())
+                {
+                    Intent intent = new Intent(getApplicationContext(),RegistrationActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                {
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(intent);
                     finish();
