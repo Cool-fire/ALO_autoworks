@@ -88,9 +88,11 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
 
+
                 ArrayAdapter<String> NewAdapter;
                 NewAdapter = getArrayList(arrayList[i]);
                 model.setAdapter(NewAdapter);
+                model.setText("");
 
             }
         });

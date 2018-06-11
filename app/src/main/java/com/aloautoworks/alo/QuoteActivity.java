@@ -47,8 +47,29 @@ public class QuoteActivity extends AppCompatActivity {
 
     String[] SERVICELIST = {"Servicing and MOT", "Clutch and Gearbox Repairs", "Brakes and Exhausts", "Mobile Mechanics and Services","Engine and Cooling","Air-con,Heating and Cooling","BodyWorks,Dents and Smart Repairs","Break down and Recovery",
                             "Diagnostics","Electical and Batteries","Hybrid and Electric Vehicles","Safety Components","Steering and Suspension","Tyres,Wheels and Tracking","Windows,Windscreens,Mirrors"};
+
+    String[] ServicingList = {"Servicing and MOT"};
+    String[] ClutchList = {"Clutch and Gearbox Repairs"};
+    String[] BrakesList = {"Brakes and Exhausts"};
+    String[] MechanicsList = {"Mobile Mechanics and Services"};
+    String[] EngineList = {"Engine and Cooling"};
+    String[] AirconList = {"Aircon Regas","Airconditioning Servies","car heater","other-Aircon heating,cooling","overheating problem","Heater Matrix"};
+    String[] BodyWorksList = {"Respraying","BodyShop","Accident Repairs","Dent Removal","Paint Work Repair","Smart Repair,Scratches and scuff","welding","Panel Beating","Wrapping and vinyl wrap"};
+    String[] BreakDownList = {"Break down and Recovery-other","other"};
+    String[] DiagnosticsList = {"Diagnostics-other","Diesel particulate Filter Replacement","Engine Mapping and Rebalancing","Engine Tuning","Diesel Tuning","Diagnostic Test","Electrical fault Diagnostics","Diesel particulate filter clean"};
+    String[] ElectricalList = {"Electrical and batteries"};
+    String[] HybridList = {"Hybrid and Electric Vehicles"};
+    String[] SafetyList = {"Airbags Repair","Seat belt Repair","Key Components","Central Locking system","key Programming and codes","auto locksmith","Immobilisers fault","car alarm keeps going off"};
+    String[] SteeringList = {"Steering Repairs","shock absorber repair","Power steering","Steering Rack","Axle Reepairs","Car Pulling Left or Right","Steering wheel shaking"};
+    String[] TyresList = {"Puncture Repair","Tyre Fitting","wheel Bearing","Front Wheel Alignment","Alloy wheel Refurbishment","wheel Tracking","Front and rear wheel alignment","specalist tyres"};
+    String[] WindowsList = {"Windscreen Replacement","wing mirror","window Tinting","Electric window faults","window Replacement","windscreen wipers","Rear windscreen wipers","window repair","windscreen Repair"};
+
+    String[][] arraylist = new String[][]{ServicingList,ClutchList,BrakesList,MechanicsList,EngineList,AirconList,BodyWorksList,BreakDownList,DiagnosticsList,ElectricalList,HybridList,SafetyList,SteeringList,TyresList,WindowsList};
+    String[] dummyList = {""};
+
     private TextInputEditText mileage;
     private ImageView carbutton;
+    private MaterialBetterSpinner subservice;
 
 
     @Override
@@ -71,8 +92,13 @@ public class QuoteActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         user = mAuth.getCurrentUser();
         uid = user.getUid();
-        ArrayAdapter<String> arrayList = getArrayList(Arrays.asList(SERVICELIST));
-        serviceType.setAdapter(arrayList);
+        ArrayAdapter<String> arrayAdapter = getArrayList(Arrays.asList(SERVICELIST));
+        serviceType.setAdapter(arrayAdapter);
+
+        ArrayAdapter<String> dummyAdapter = getArrayList(Arrays.asList(dummyList));
+        subservice.setAdapter(dummyAdapter);
+
+
         checkForUservehicle(new getVehicleresults() {
             @Override
             public void getvehicle(vehicle value) {
@@ -94,6 +120,17 @@ public class QuoteActivity extends AppCompatActivity {
                 modelNo.setText(vehicleName.modelName);
                 mileage.setText(vehicleName.fuel);
 
+            }
+        });
+        serviceType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                ArrayAdapter<String> NewAdapter;
+                NewAdapter = getArrayList(Arrays.asList(arraylist[i]));
+                subservice.setAdapter(NewAdapter);
+                subservice.setText("");
             }
         });
 
@@ -167,7 +204,7 @@ public class QuoteActivity extends AppCompatActivity {
         quoteBttn = (Button)findViewById(R.id.quoteBttn);
         mileage = (TextInputEditText)findViewById(R.id.mileage);
         carbutton = (ImageView)findViewById(R.id.carbutton);
-
+        subservice = (MaterialBetterSpinner)findViewById(R.id.subservice);
     }
 
     private ArrayAdapter<String> getArrayList(List<String> list) {
