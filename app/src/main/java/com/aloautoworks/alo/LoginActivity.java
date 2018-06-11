@@ -262,7 +262,8 @@ public class LoginActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Log.d("TAG", "onActivityResult: "+user.getPhoneNumber());
-                Toast.makeText(getApplicationContext(),"Succesfully signed In",Toast.LENGTH_SHORT).show();
+                checkForDataInFirebasebyphone(user);
+               // Toast.makeText(getApplicationContext(),"Succesfully signed In",Toast.LENGTH_SHORT).show();
             } else {
 
                 if(resultCode != 0)
@@ -290,6 +291,78 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         }
+
+    }
+
+    private void checkForDataInFirebasebyphone(FirebaseUser user) {
+        startDialog();
+        final String uid = user.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference postref = mDatabase.child("users");
+        postref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(uid))
+                {
+                    postref.child(uid).child("Name").addListenerForSingleValueEvent(new ValueEventListener() {
+                        private String value;
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            value = dataSnapshot.getValue(String.class);
+                            if(value.toString().equals("none"))
+                            {
+                                stopDialog();
+                                Intent intent = new Intent(getApplicationContext(),UpdatePhoneUser.class);
+                                startActivity(intent);
+                                finish();
+
+                            }
+                            else
+                            {
+
+                                stopDialog();
+                                checkForUservehicle(new getVehicleresult() {
+                                    @Override
+                                    public void checkVehicle(String value) {
+                                        if(value.toString()=="true")
+                                        {
+                                            Intent intent = new Intent(getApplicationContext(),QuoteMainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        else
+                                        {
+                                            Intent intent = new Intent(LoginActivity.this,RegistrationActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+                                });
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            stopDialog();
+                        }
+                    });
+                }
+
+                else if(!dataSnapshot.hasChild(uid))
+                {
+                    Log.d("TAG", "onDataChange: else");
+                    stopDialog();
+                    Intent intent = new Intent(getApplicationContext(),UpdatePhoneUser.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

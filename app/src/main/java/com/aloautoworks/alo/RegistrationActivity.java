@@ -154,15 +154,32 @@ public class RegistrationActivity extends AppCompatActivity {
             FirebaseUser user = mAuth.getCurrentUser();
             String uid = user.getUid();
             String id= vehicleReference.push().getKey();
-
             vehicle registerVehicle = new vehicle(id, vehicleName, manufacter, modelNo, fuelquantity);
             vehicleReference.child(id).setValue(registerVehicle);
             uservehicleReference.child(uid).child(id).setValue(registerVehicle);
 
             registerCircularBttn.revertAnimation();
 
-            gotoQuoteActivity();
-            Toast.makeText(RegistrationActivity.this,"Vehicle  created", Toast.LENGTH_LONG).show();
+            if(getCallingActivity()!=null)
+            {
+               if(getCallingActivity().getClassName().toString().equals("com.aloautoworks.alo.QuoteActivity"))
+               {
+                   Toast.makeText(RegistrationActivity.this,"Vehicle  added", Toast.LENGTH_LONG).show();
+                   finish();
+               }
+               else
+               {
+                   gotoQuoteActivity();
+                   Toast.makeText(RegistrationActivity.this,"Vehicle  added", Toast.LENGTH_LONG).show();
+               }
+            }
+            else
+            {
+                gotoQuoteActivity();
+                Toast.makeText(RegistrationActivity.this,"Vehicle  created", Toast.LENGTH_LONG).show();
+            }
+
+
         }
     }
 

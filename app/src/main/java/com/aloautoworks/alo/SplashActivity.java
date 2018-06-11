@@ -59,7 +59,8 @@ public class SplashActivity extends AppCompatActivity {
         postref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("users").hasChild(uid) && dataSnapshot.child("user vehicles").child(uid).hasChildren())
+                final DataSnapshot BigdataSnapshot = dataSnapshot;
+                if(dataSnapshot.child("users").hasChild(uid))
                 {
                     postref.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -80,8 +81,15 @@ public class SplashActivity extends AppCompatActivity {
 
 
                             }
+                            else if (!BigdataSnapshot.child("user vehicles").child(uid).hasChildren())
+                            {
+                                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                             else
                             {
+                                Log.d(TAG, "onDataChange: elsei");
                                 Intent intent = new Intent(SplashActivity.this,QuoteMainActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -107,12 +115,14 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 else if(!dataSnapshot.child("user vehicles").child(uid).hasChildren())
                 {
+                    Log.d("TAG", "onDataChange: elseuserv");
                     Intent intent = new Intent(getApplicationContext(),RegistrationActivity.class);
                     startActivity(intent);
                     finish();
                 }
                 else
                 {
+                    Log.d("TAG", "onDataChange: elseall");
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(intent);
                     finish();

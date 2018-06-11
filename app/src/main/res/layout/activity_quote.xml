@@ -29,7 +29,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:clickable="true"
+            android:paddingRight="10dp"
             android:src="@drawable/whitecar"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="New"
+            android:textColor="@color/colorwhite"
+            android:textSize="17sp"/>
     </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -104,7 +111,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="13dp"
-        android:hint="Type of Repair"
+        android:hint="Repair category"
         android:overScrollMode="ifContentScrolls"
         android:textColorHint="#05ab9a"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,23 +129,18 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView5"
         app:srcCompat="@drawable/ic_license_plate" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout8"
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/subservice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
+        android:hint="service type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
         app:layout_constraintTop_toBottomOf="@+id/serviceType">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/numberplate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Number Plate" />
-    </android.support.design.widget.TextInputLayout>
+    </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
 
     <ImageView
         android:id="@+id/imageView8"
@@ -159,7 +161,7 @@
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
+        app:layout_constraintTop_toBottomOf="@+id/subservice">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/pincode"

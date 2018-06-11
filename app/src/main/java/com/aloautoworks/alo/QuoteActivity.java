@@ -3,6 +3,7 @@ package com.aloautoworks.alo;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.aloautoworks.alo.models.vehicle;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +30,7 @@ import java.util.List;
 
 public class QuoteActivity extends AppCompatActivity {
 
+    private static final int REQUESTCAR = 100;
     private MaterialBetterSpinner vehicleName;
     private MaterialBetterSpinner serviceType;
     private TextInputEditText numberplate;
@@ -42,9 +45,10 @@ public class QuoteActivity extends AppCompatActivity {
     private Button quoteBttn;
     private TextInputEditText modelNo;
 
-    String[] SERVICELIST = {"Servicing and MOT", "Clutch and Gearbox Repairs", "Brakes aand Exhausts", "Mobile Mechanics and Services","Engine and Cooling","Air-con,Heating and Cooling","BodyWorks,Dents and Smart Repairs","Breaak down and Recovery",
-                            "Diagnostics","Electicl and Batteries","Hybrid and Electric Vehicles","Safety Components","Steering and Suspension","Tyres,Wheels and Tracking","Windows,Windscreens,Mirrors"};
+    String[] SERVICELIST = {"Servicing and MOT", "Clutch and Gearbox Repairs", "Brakes and Exhausts", "Mobile Mechanics and Services","Engine and Cooling","Air-con,Heating and Cooling","BodyWorks,Dents and Smart Repairs","Break down and Recovery",
+                            "Diagnostics","Electical and Batteries","Hybrid and Electric Vehicles","Safety Components","Steering and Suspension","Tyres,Wheels and Tracking","Windows,Windscreens,Mirrors"};
     private TextInputEditText mileage;
+    private ImageView carbutton;
 
 
     @Override
@@ -93,6 +97,12 @@ public class QuoteActivity extends AppCompatActivity {
             }
         });
 
+        carbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    callRegistrationActivity();
+            }
+        });
 
 
 
@@ -111,6 +121,37 @@ public class QuoteActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUESTCAR)
+        {
+            if(!vehiclelist.isEmpty() || !list.isEmpty())
+            {
+                list.clear();
+                vehiclelist.clear();
+                vehiclelist.add("");
+            }
+            checkForUservehicle(new getVehicleresults() {
+                @Override
+                public void getvehicle(vehicle value) {
+                    if(vehiclelist.contains(""))
+                    {
+                        vehiclelist.remove("");
+                    }
+                    list.add(value);
+                    vehiclelist.add(value.manufacturerName);
+                    Log.d("TAG", "getvehicle: "+value);
+                    callAdapter();
+                }
+            });
+        }
+    }
+
+    private void callRegistrationActivity() {
+        Intent intent = new Intent(getApplicationContext(),RegistrationActivity.class);
+        startActivityForResult(intent,REQUESTCAR);
+    }
+
     private void callAdapter() {
         ArrayAdapter<String> arrayList = getArrayList(vehiclelist);
         vehicleName.setAdapter(arrayList);
@@ -121,11 +162,11 @@ public class QuoteActivity extends AppCompatActivity {
 
         vehicleName = (MaterialBetterSpinner)findViewById(R.id.vehicle);
         serviceType = (MaterialBetterSpinner)findViewById(R.id.serviceType);
-        numberplate = (TextInputEditText)findViewById(R.id.numberplate);
         modelNo = (TextInputEditText)findViewById(R.id.modelNumber);
         pincode = (TextInputEditText)findViewById(R.id.pincode);
         quoteBttn = (Button)findViewById(R.id.quoteBttn);
         mileage = (TextInputEditText)findViewById(R.id.mileage);
+        carbutton = (ImageView)findViewById(R.id.carbutton);
 
     }
 
