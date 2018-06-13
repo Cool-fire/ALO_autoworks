@@ -11,6 +11,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -71,11 +72,16 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
         recycleview.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(),recycleview, new RecyclerTouchListener.Clicklistner() {
             @Override
             public void onclick(View view, int position) {
+                Log.d("TAG", "onclick: "+position);
                 switch (position)
                 {
+
                     case 0:
                         Intent intent = new Intent(getApplicationContext(),QuoteActivity.class);
                         startActivity(intent);
+                    case 1:
+                        Intent newgarageintent = new Intent(getApplicationContext(),AddGarage.class);
+                        startActivity(newgarageintent);
                 }
             }
 
@@ -111,7 +117,7 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
         mainlistfeed feeditem =new mainlistfeed(R.drawable.ic_menu_manage,"Search Workshops Near By","In need of a quality workshop,tap to explore");
         feedList.add(feeditem);
 
-        feeditem = new mainlistfeed(R.drawable.ic_menu_camera,"CarWorkz Assistant","use our tool in case of car Breakdown");
+        feeditem = new mainlistfeed(R.drawable.ic_menu_camera,"Add Your Service centre","Grow with us and let us grow");
         feedList.add(feeditem);
     }
 
