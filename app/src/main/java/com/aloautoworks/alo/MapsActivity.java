@@ -84,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
 
@@ -238,6 +239,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 callForNearbygarages();
                 mMap.setBuildingsEnabled(true);
                 mMap.setMyLocationEnabled(true);
+            }
+            else
+            {
+                checkLocationPermission();
             }
         }
         else {

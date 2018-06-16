@@ -79,6 +79,7 @@ public class QuoteActivity extends AppCompatActivity {
 
 
         vehiclelist.add("");
+        Log.d("TAG", "onCreate: QuoteActivity");
 
         setupviews();
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);

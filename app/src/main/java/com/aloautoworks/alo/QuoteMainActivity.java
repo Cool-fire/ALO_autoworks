@@ -73,16 +73,29 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onclick(View view, int position) {
                 Log.d("TAG", "onclick: "+position);
-                switch (position)
-                {
 
-                    case 0:
-                        Intent intent = new Intent(getApplicationContext(),QuoteActivity.class);
-                        startActivity(intent);
-                    case 1:
-                        Intent newgarageintent = new Intent(getApplicationContext(),AddGarage.class);
-                        startActivity(newgarageintent);
+                if(position == 0)
+                {
+                    Intent intent = new Intent(getApplicationContext(),QuoteActivity.class);
+                    startActivity(intent);
                 }
+                else if (position == 1)
+                {
+                    Intent newgarageintent = new Intent(getApplicationContext(),AddGarage.class);
+                    startActivity(newgarageintent);
+                }
+//                switch (position)
+//                {
+//
+//                    case 0:
+//                        Intent intent = new Intent(getApplicationContext(),QuoteActivity.class);
+//                        startActivity(intent);
+//
+//                    case 1:
+//                        Intent newgarageintent = new Intent(getApplicationContext(),AddGarage.class);
+//                        startActivity(newgarageintent);
+//
+//                }
             }
 
             @Override
