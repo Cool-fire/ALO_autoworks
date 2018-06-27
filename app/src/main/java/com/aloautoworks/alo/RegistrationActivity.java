@@ -1,6 +1,8 @@
 package com.aloautoworks.alo;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,7 +54,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private DatabaseReference vehicleReference;
     private DatabaseReference uservehicleReference;
     private FirebaseAuth mAuth;
-    private CircularProgressButton registerCircularBttn;
+    private Button registerCircularBttn;
+    private Drawable drawable;
 
 
     @Override
@@ -61,44 +64,70 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
 
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Vehicle Registration");
-        myToolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
+//
+//        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(myToolbar);
+//        getSupportActionBar().setTitle("Vehicle Registration");
+//        myToolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
 
 
         vehiclelAdapter = getArrayList(VEHICLELIST);
         vehicleSpinner = (MaterialBetterSpinner)findViewById(R.id.vehicle);
+        vehicleSpinner.setHintTextColor(Color.WHITE);
+        vehicleSpinner.setTextColor(Color.WHITE);
+        vehicleSpinner.setBackground(getDrawable(R.drawable.et_bg));
         vehicleSpinner.setAdapter(vehiclelAdapter);
+        vehicleSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+              vehicleSpinner.setError(null,null);
+            }
+        });
+
+        drawable = getResources().getDrawable(R.drawable.error);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
 
         manufacturerAdapter = getArrayList(MANUFACTURERLIST);
         manufacturerSpinner = (MaterialBetterSpinner)findViewById(R.id.manufacturer);
+        manufacturerSpinner.setHintTextColor(Color.WHITE);
+        manufacturerSpinner.setTextColor(Color.WHITE);
+        manufacturerSpinner.setBackground(getDrawable(R.drawable.et_bg));
         manufacturerSpinner.setAdapter(manufacturerAdapter);
+
 
 
         ArrayAdapter<String> dummyAdapter = getArrayList(dummyList);
         model = (MaterialBetterSpinner)findViewById(R.id.model);
+        model.setHintTextColor(Color.WHITE);
+        model.setTextColor(Color.WHITE);
+        model.setBackground(getDrawable(R.drawable.et_bg));
         model.setAdapter(dummyAdapter);
         fuel = (TextInputEditText)findViewById(R.id.petrol);
-
+        model.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                model.setError(null,null);
+            }
+        });
 
         manufacturerSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
 
-
+                manufacturerSpinner.setError(null,null);
                 ArrayAdapter<String> NewAdapter;
                 NewAdapter = getArrayList(arrayList[i]);
                 model.setAdapter(NewAdapter);
                 model.setText("");
 
+
             }
         });
 
         //registerBttn = (Button)findViewById(R.id.register);
-        registerCircularBttn = (CircularProgressButton)findViewById(R.id.register);
+        registerCircularBttn = (Button)findViewById(R.id.register);
 
         vehicleReference = FirebaseDatabase.getInstance().getReference("vehicle");
 
@@ -121,7 +150,7 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onDestroy() {
 
         super.onDestroy();
-        registerCircularBttn.dispose();
+
     }
 
     private void Register() {
@@ -133,25 +162,25 @@ public class RegistrationActivity extends AppCompatActivity {
         {
             if(vehicleName.isEmpty())
             {
-                vehicleSpinner.setError("vehicle type required");
+                vehicleSpinner.setError("vehicle type required",drawable);
             }
             if(manufacter.isEmpty())
             {
-                manufacturerSpinner.setError("manufacturer required");
+                manufacturerSpinner.setError("manufacturer required",drawable);
             }
             if(modelNo.isEmpty())
             {
-                model.setError("model required");
+                model.setError("model required",drawable);
 
             }
             if (fuelquantity.isEmpty())
             {
-                fuel.setError("fuel quantity required");
+                fuel.setError("mileage required");
             }
         }
         else
         {
-            registerCircularBttn.startAnimation();
+
 
             FirebaseUser user = mAuth.getCurrentUser();
             String uid = user.getUid();
@@ -160,7 +189,6 @@ public class RegistrationActivity extends AppCompatActivity {
             vehicleReference.child(id).setValue(registerVehicle);
             uservehicleReference.child(uid).child(id).setValue(registerVehicle);
 
-            registerCircularBttn.revertAnimation();
 
             if(getCallingActivity()!=null)
             {

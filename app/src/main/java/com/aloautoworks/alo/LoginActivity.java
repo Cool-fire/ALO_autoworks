@@ -14,12 +14,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aloautoworks.alo.models.UserModel;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -50,34 +52,29 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FloatingActionButton phonesignIn;
     private static final int RC_SIGN = 1;
-    private TextInputEditText email;
-    private TextInputEditText password;
+    private EditText email;
+    private EditText password;
     private Button loginButton;
     private TextView forgotpassword;
     private ProgressDialog dialog;
     private DatabaseReference mDatabase;
     private ProgressDialog dialog1;
     private DataSnapshot name;
+    private TextView signuptext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_loginnew);
 
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Login");
-        myToolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
-        
-        googlesignIn = (FloatingActionButton)findViewById(R.id.googleBttn);
-        phonesignIn = (FloatingActionButton)findViewById(R.id.phoneBttn);
-        email = (TextInputEditText)findViewById(R.id.loginEmail);
-        password = (TextInputEditText)findViewById(R.id.loginPassword);
-        loginButton = (Button)findViewById(R.id.login);
-        forgotpassword = (TextView)findViewById(R.id.textView);
-        dialog = new ProgressDialog(LoginActivity.this);
-        dialog1 = new ProgressDialog(LoginActivity.this);
+//        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(myToolbar);
+//        getSupportActionBar().setTitle("Login");
+//        myToolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
+
+
+        setupviews();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -151,6 +148,29 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        signuptext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,signup.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    private void setupviews() {
+
+
+        googlesignIn = (FloatingActionButton) findViewById(R.id.googleBttn);
+        phonesignIn = (FloatingActionButton) findViewById(R.id.phoneBttn);
+        email = (EditText)findViewById(R.id.loginemail);
+        password = (EditText) findViewById(R.id.loginPassword);
+        loginButton = (Button)findViewById(R.id.login);
+        forgotpassword = (TextView) findViewById(R.id.textView);
+        signuptext = (TextView)findViewById(R.id.signuptext);
+        dialog = new ProgressDialog(LoginActivity.this);
+        dialog1 = new ProgressDialog(LoginActivity.this);
     }
 
     private void signinwithEmail() {
@@ -528,4 +548,5 @@ public class LoginActivity extends AppCompatActivity {
     public interface getVehicleresult {
         void checkVehicle(String value);
     }
+
 }

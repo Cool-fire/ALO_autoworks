@@ -2,12 +2,13 @@ package com.aloautoworks.alo;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -15,18 +16,18 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aloautoworks.alo.models.Garage.Garages;
 import com.aloautoworks.alo.models.Garage.Result;
 import com.aloautoworks.alo.remote.Common;
 import com.aloautoworks.alo.remote.IGoogleApiService;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,6 +36,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.BubbleIconFactory;
+import com.google.maps.android.ui.IconGenerator;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
@@ -58,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Context context;
     private OnLocationUpdatedListener locationListner;
     public Runnable locationRunnable;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        progressBar = (ProgressBar)findViewById(R.id.progressBarDialog);
 
         mService = Common.getGoogleAPIService();
         context = getApplicationContext();
@@ -112,12 +119,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void callForNearbygarages() {
+        Log.d("TAG", "callForNearbygarages: ");
         final Handler handler = new Handler();
         SmartLocation.with(context).location().start(locationListner);
         locationListner = new OnLocationUpdatedListener() {
             @Override
             public void onLocationUpdated(Location location) {
 
+                progressBar.setVisibility(View.VISIBLE);
                 double lat = location.getLatitude();
                 double lng = location.getLongitude();
                 LatLng latLng1 = new LatLng(lat,lng);
@@ -133,10 +142,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
 
+
     }
 
 
     private void nearByplace(final double lat1, final double lng1, String placeType) {
+        Log.d("TAG", "nearByplace: ");
         mMap.clear();
 //        double lat = 13.562195;
 //        double longi = 78.494009;
@@ -148,6 +159,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onResponse(Call<Garages> call, Response<Garages> response) {
                         if (response.isSuccessful())
                         {
+                            progressBar.setVisibility(View.INVISIBLE);
                             Log.d("TAG", "onResponse: "+response.body().getStatus());
                             for(int i=0 ;i<response.body().getResults().size();i++)
                             {
@@ -160,8 +172,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 LatLng latLng = new LatLng(lat,lng);
                                 markerOptions.position(latLng);
                                 markerOptions.title(placeName);
-                                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                                mMap.addMarker(markerOptions);
+
+                                IconGenerator iconFactory = new IconGenerator(MapsActivity.this);
+                                iconFactory.setStyle(IconGenerator.STYLE_BLUE);
+
+                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon("$500")));
+                                Marker garage = mMap.addMarker(markerOptions);
+                                garage.showInfoWindow();
+                                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                    @Override
+                                    public boolean onMarkerClick(Marker marker) {
+
+                                        Intent intent = new Intent(MapsActivity.this,ServiceCenterActivity.class);
+                                        startActivity(intent);
+                                        return false;
+                                    }
+                                });
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                                 mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
                             }
@@ -169,7 +195,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             MarkerOptions markerOption = new MarkerOptions();
                             markerOption.position(latLng1);
                             markerOption.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                            mMap.addMarker(markerOption);
+                           Marker location =  mMap.addMarker(markerOption);
+                           location.showInfoWindow();
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng1));
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                         }
@@ -177,10 +204,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     @Override
                     public void onFailure(Call<Garages> call, Throwable t) {
-
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(getApplicationContext(),"Can't Load",Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+
 
     private String getUrl(double latitude, double longitude, String placeType) {
         StringBuilder googglePlaceurl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
@@ -193,7 +223,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return googglePlaceurl.toString();
     }
-    private boolean checkLocationPermission() {
+    private void checkLocationPermission() {
 
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED)
         {
@@ -208,13 +238,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
 
-            return false;
         }
         else
         {
             callForNearbygarages();
         }
-            return true;
+
     }
 
 
@@ -236,6 +265,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED)
             {
              //  buildGoogleApiclient();
+                progressBar.setVisibility(View.INVISIBLE);
                 callForNearbygarages();
                 mMap.setBuildingsEnabled(true);
                 mMap.setMyLocationEnabled(true);
@@ -322,14 +352,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 {
                     if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
                     {
-//                        if(mGoogleApiclient == null)
-//                        {
-//                           // buildGoogleApiclient();
-//
-//                        }
 
                         mMap.setMyLocationEnabled(true);
                     }
+                    callForNearbygarages();
                     callForNearbygarages();
                 }
                 else

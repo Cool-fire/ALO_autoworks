@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.aloautoworks.alo.models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,8 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class signup extends AppCompatActivity{
 
-    private TextInputEditText Email;
-    private TextInputEditText Password;
+    private EditText Email;
+    private EditText Password;
     private Button signupButton;
     private Button signinButton;
     private FirebaseAuth mAuth;
@@ -39,12 +40,12 @@ public class signup extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("signup");
-        myToolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
+        setContentView(R.layout.activity_signupnew);
+//
+//        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(myToolbar);
+//        getSupportActionBar().setTitle("signup");
+//        myToolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
         
         setupviews();
 
@@ -151,8 +152,8 @@ public class signup extends AppCompatActivity{
 
     private void setupviews() {
         
-        Email = (TextInputEditText)findViewById(R.id.Email);
-        Password = (TextInputEditText)findViewById(R.id.Password);
+        Email = (EditText)findViewById(R.id.Email);
+        Password = (EditText)findViewById(R.id.Password);
         signupButton = (Button)findViewById(R.id.signupBttn);
         signinButton = (Button)findViewById(R.id.loginBttn);
         dialog = new ProgressDialog(signup.this);

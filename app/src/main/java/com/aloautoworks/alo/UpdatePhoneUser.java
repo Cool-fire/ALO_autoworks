@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.aloautoworks.alo.models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,9 +25,9 @@ public class UpdatePhoneUser extends AppCompatActivity {
 
     private Toolbar myToolbar;
     private ProgressDialog dialog;
-    private TextInputEditText email;
+    private EditText email;
     private Button updateBttn;
-    private TextInputEditText name;
+    private EditText name;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -37,10 +38,11 @@ public class UpdatePhoneUser extends AppCompatActivity {
         setupViews();
 
         mAuth = FirebaseAuth.getInstance();
-
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Update Info");
-        myToolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
+//
+//        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(myToolbar);
+//        getSupportActionBar().setTitle("Update Info");
+//        myToolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
         updateBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,9 +116,9 @@ public class UpdatePhoneUser extends AppCompatActivity {
     }
 
     private void setupViews() {
-        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        name = (TextInputEditText)findViewById(R.id.name);
-        email = (TextInputEditText)findViewById(R.id.email);
+
+        name = (EditText)findViewById(R.id.name);
+        email = (EditText)findViewById(R.id.email);
         updateBttn = (Button)findViewById(R.id.updateBttn);
         dialog = new ProgressDialog(UpdatePhoneUser.this);
     }

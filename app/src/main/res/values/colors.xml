@@ -8,4 +8,11 @@
     <color name="colorBlueAccent">#42A5F5</color>
     <color name="colorwhite">#ffffff</color>
     <color name="colorbluepale">#4FC3F7</color>
+    <color name="colorPrimaryRipple">#4200BCD4</color>
+
+    <color name="global_color_primary_light">#f5f5f5</color>
+    <color name="transparent">#00000000</color>
+    <color name="gradStart">#19AA8B</color>
+    <color name="gradStop">#388e3c</color>
+    <color name="global_color_green_accent">#23A7D8</color>
 </resources>

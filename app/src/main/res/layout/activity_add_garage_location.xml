@@ -10,4 +10,14 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigationview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/colorBluePrimary"
+        app:itemIconTint="@color/colorwhite"
+        app:itemTextColor="@color/colorwhite"
+        app:menu="@menu/addgaragemenu" />
 </RelativeLayout>

@@ -4,16 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/grad_bg"
     tools:context=".RegistrationActivity">
 
-    <android.support.v7.widget.Toolbar
+    <TextView
         android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="Register Your Vehicle"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -32,14 +38,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:hint="Vehicle"
         android:overScrollMode="ifContentScrolls"
         android:textColorHint="#05ab9a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
-        app:met_floatingLabel="normal" />
+        android:padding="5dp"
+        android:background="@drawable/et_bg"
+        android:paddingLeft="10dp"
+        app:met_floatingLabel="none"
+        app:met_hideUnderline="true"/>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -57,14 +67,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:overScrollMode="ifContentScrolls"
         android:hint="Manufacturer"
         android:textColorHint="#05ab9a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/vehicle"
-        app:met_floatingLabel="normal" />
+        android:padding="5dp"
+        android:background="@drawable/et_bg"
+        android:paddingLeft="10dp"
+        app:met_floatingLabel="none"
+        app:met_hideUnderline="true" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -83,14 +97,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:overScrollMode="ifContentScrolls"
         android:hint="Model"
         android:textColorHint="#05ab9a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/manufacturer"
-        app:met_floatingLabel="normal" />
+        android:padding="5dp"
+        android:background="@drawable/et_bg"
+        android:paddingLeft="10dp"
+        app:met_floatingLabel="none"
+        app:met_hideUnderline="true"/>
 
 
 
@@ -109,8 +127,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
+        android:theme="@style/Autocomplete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/model">
@@ -120,10 +139,12 @@
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorwhite"
+            android:textColorHint="@color/colorwhite"
             android:hint="mileage" />
     </android.support.design.widget.TextInputLayout>
 
-    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+    <Button
         android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,14 +152,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
         android:text="Register"
-        android:background="@color/colorbluepale"
+        android:background="@drawable/bt1_bg"
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout7"
-        app:spinning_bar_width="4dp"
-        app:spinning_bar_color="#FFF"
-        app:spinning_bar_padding="6dp" />
+        />
 
 
     <!--<Button

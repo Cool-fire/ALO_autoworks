@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/grad_bg"
     tools:context=".QuoteActivity">
-
-
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -40,14 +39,28 @@
     </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/Heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:text="Get a fair quote for your car upfront"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar" />
+
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/Heading"
         app:srcCompat="@drawable/car" />
 
     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
@@ -62,8 +75,12 @@
         android:textColorHint="#05ab9a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
-        app:met_floatingLabel="normal" />
+        app:layout_constraintTop_toBottomOf="@+id/Heading"
+        android:padding="5dp"
+        android:background="@drawable/et_bg"
+        android:paddingLeft="10dp"
+        app:met_floatingLabel="none"
+        app:met_hideUnderline="true" />
 
     <ImageView
         android:id="@+id/modelpic"
@@ -75,24 +92,23 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
         app:srcCompat="@drawable/list" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/modelno"
+    <EditText
+        android:id="@+id/modelNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="14dp"
-
+        android:maxLines="1"
+        android:padding="13dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/et_bg"
+        android:hint="Model"
+        android:textColor="@color/colorwhite"
+        android:theme="@style/Autocomplete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/vehicle">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/modelNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Model" />
-    </android.support.design.widget.TextInputLayout>
+    </EditText>
 
     <ImageView
         android:id="@+id/imageView5"
@@ -110,14 +126,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="25dp"
         android:hint="Repair category"
         android:overScrollMode="ifContentScrolls"
         android:textColorHint="#05ab9a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/modelno"
-        app:met_floatingLabel="normal" />
+        app:layout_constraintTop_toBottomOf="@+id/modelNumber"
+        android:padding="5dp"
+        android:background="@drawable/et_bg"
+        android:paddingLeft="10dp"
+        app:met_floatingLabel="none"
+        app:met_hideUnderline="true" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -139,7 +159,12 @@
         android:hint="service type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/serviceType">
+        app:layout_constraintTop_toBottomOf="@+id/serviceType"
+        android:padding="5dp"
+        android:background="@drawable/et_bg"
+        android:paddingLeft="10dp"
+        app:met_floatingLabel="none"
+        app:met_hideUnderline="true">
     </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
 
     <ImageView
@@ -152,25 +177,26 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
         app:srcCompat="@drawable/pincodeicon" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout9"
+    <EditText
+        android:id="@+id/pincode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/subservice">
+        app:layout_constraintTop_toBottomOf="@+id/subservice"
+        android:hint="pincode"
+        android:inputType="number"
+        android:maxLength="6"
+        android:background="@drawable/et_bg"
+        android:padding="13dp"
+        android:textColor="@color/colorwhite"
+        android:theme="@style/Autocomplete">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/pincode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="pincode"
-            android:inputType="number"
-            android:maxLength="6" />
-    </android.support.design.widget.TextInputLayout>
+
+    </EditText>
 
     <ImageView
         android:id="@+id/mileageicon"
@@ -182,25 +208,24 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView8"
         app:srcCompat="@drawable/gasstation" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout10"
+    <EditText
+        android:id="@+id/mileage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/mileageicon"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/mileage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="mileage"
-            android:inputType="number"
-            android:maxLength="4" />
-    </android.support.design.widget.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/pincode"
+        android:hint="mileage"
+        android:inputType="number"
+        android:maxLength="4"
+        android:padding="13dp"
+        android:textColor="@color/colorwhite"
+        android:background="@drawable/et_bg"
+        android:theme="@style/Autocomplete">
+    </EditText>
 
     <Button
         android:id="@+id/quoteBttn"
@@ -209,7 +234,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@color/colorbluepale"
+        android:background="@drawable/bt1_bg"
         android:text="Get Quote"
         android:textColor="@color/colorwhite"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,7 +1,9 @@
 package com.aloautoworks.alo;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -33,6 +35,7 @@ public class AddGarageLocation extends FragmentActivity implements OnMapReadyCal
     private Context context;
     private OnLocationUpdatedListener locationListner;
     private Runnable locationRunnable;
+    private LatLng GarageLocation= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +54,44 @@ public class AddGarageLocation extends FragmentActivity implements OnMapReadyCal
             }
 
         }
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigationview);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.add_bottom_garage:
+
+                        if(GarageLocation != null )
+                        {
+                            Intent data = new Intent();
+                            Bundle b = new Bundle();
+                            b.putParcelable("location",GarageLocation);
+                            data.putExtras(b);
+                            setResult(Activity.RESULT_OK, data);
+                            finish();
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(),"Please select your garage",Toast.LENGTH_SHORT).show();
+                        }
+
+                }
+                return true;
+            }
+        });
     }
+
+
 
     private void checkLocationPermission() {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSION_CODE);
         }
-        else
-        {
 
-
-        }
     }
 
 
@@ -117,8 +146,8 @@ public class AddGarageLocation extends FragmentActivity implements OnMapReadyCal
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                LatLng Garage = new LatLng(latLng.latitude, latLng.longitude);
-                MarkerOptions marker = new MarkerOptions().position(Garage).title("Your Garage");
+                GarageLocation = new LatLng(latLng.latitude, latLng.longitude);
+                MarkerOptions marker = new MarkerOptions().position(GarageLocation).title("Your Garage");
 
                 mMap.clear();
                 mMap.addMarker(marker);

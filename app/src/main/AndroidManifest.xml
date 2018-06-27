@@ -45,6 +45,7 @@
         <activity
             android:name=".QuoteMainActivity"
             android:label="@string/title_activity_quote_main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity android:name=".QuoteActivity" />
         <activity android:name=".NearbyGaragesActivity" />
@@ -67,7 +68,11 @@
         <activity android:name=".AddGarage" />
         <activity
             android:name=".AddGarageLocation"
-            android:label="@string/title_activity_add_garage_location"></activity>
+            android:label="@string/title_activity_add_garage_location" />
+        <activity android:name=".StartActivity" />
+        <activity android:name=".ServiceCenterActivity" />
+        <activity android:name=".ContactActivity" />
+        <activity android:name=".UserProfileActivity"></activity>
     </application>
 
 </manifest>

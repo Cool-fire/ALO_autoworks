@@ -1,6 +1,9 @@
 package com.aloautoworks.alo;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
@@ -12,7 +15,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aloautoworks.alo.models.vehicle;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +39,7 @@ public class QuoteActivity extends AppCompatActivity {
     private MaterialBetterSpinner vehicleName;
     private MaterialBetterSpinner serviceType;
     private TextInputEditText numberplate;
-    private TextInputEditText pincode;
+    private EditText pincode;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private List<vehicle> list = new ArrayList<>();
@@ -43,7 +48,7 @@ public class QuoteActivity extends AppCompatActivity {
     private FirebaseUser user;
     private String uid;
     private Button quoteBttn;
-    private TextInputEditText modelNo;
+    private EditText modelNo;
 
     String[] SERVICELIST = {"Servicing and MOT", "Clutch and Gearbox Repairs", "Brakes and Exhausts", "Mobile Mechanics and Services","Engine and Cooling","Air-con,Heating and Cooling","BodyWorks,Dents and Smart Repairs","Break down and Recovery",
                             "Diagnostics","Electical and Batteries","Hybrid and Electric Vehicles","Safety Components","Steering and Suspension","Tyres,Wheels and Tracking","Windows,Windscreens,Mirrors"};
@@ -67,9 +72,12 @@ public class QuoteActivity extends AppCompatActivity {
     String[][] arraylist = new String[][]{ServicingList,ClutchList,BrakesList,MechanicsList,EngineList,AirconList,BodyWorksList,BreakDownList,DiagnosticsList,ElectricalList,HybridList,SafetyList,SteeringList,TyresList,WindowsList};
     String[] dummyList = {""};
 
-    private TextInputEditText mileage;
+    private EditText mileage;
     private ImageView carbutton;
     private MaterialBetterSpinner subservice;
+    private TextView headingText;
+    private Drawable errordrawable;
+    private String string;
 
 
     @Override
@@ -87,6 +95,16 @@ public class QuoteActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Quote");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
 
+
+
+
+
+        subservice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                subservice.setError(null,null);
+            }
+        });
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -117,9 +135,18 @@ public class QuoteActivity extends AppCompatActivity {
         vehicleName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                vehicle vehicleName = list.get(i);
-                modelNo.setText(vehicleName.modelName);
-                mileage.setText(vehicleName.fuel);
+                try
+                {
+                    vehicle vehiclename = list.get(i);
+                    modelNo.setText(vehiclename.modelName);
+                    mileage.setText(vehiclename.fuel);
+                    vehicleName.setError(null,null);
+                }
+                catch (Exception e)
+                {
+
+                }
+
 
             }
         });
@@ -132,6 +159,7 @@ public class QuoteActivity extends AppCompatActivity {
                 NewAdapter = getArrayList(Arrays.asList(arraylist[i]));
                 subservice.setAdapter(NewAdapter);
                 subservice.setText("");
+                serviceType.setError(null,null);
             }
         });
 
@@ -149,14 +177,58 @@ public class QuoteActivity extends AppCompatActivity {
        quoteBttn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-                    Intent intent = new Intent(QuoteActivity.this,MapsActivity.class);
-                    startActivity(intent);
+
+               checkforDetails();
+
            }
        });
 
 
 
 
+    }
+
+    private void checkforDetails() {
+
+        String vehiclename = vehicleName.getText().toString();
+        String servicetype= serviceType.getText().toString();
+        String modelno = modelNo.getText().toString();
+        String pincodeno  = pincode.getText().toString();
+        String mileageno = mileage.getText().toString();
+        String subserviceno = subservice.getText().toString();
+
+        if(vehiclename.isEmpty() || servicetype.isEmpty() || modelno.isEmpty() || pincodeno.isEmpty() || mileageno.isEmpty() || subserviceno.isEmpty())
+        {
+            if(vehiclename.isEmpty())
+            {
+                vehicleName.setError("Vehicle Required",errordrawable);
+            }
+            if(servicetype.isEmpty())
+            {
+                serviceType.setError("Service type Requied",errordrawable);
+            }
+            if(modelno.isEmpty())
+            {
+                modelNo.setError("Model Required",errordrawable);
+            }
+            if(pincodeno.isEmpty())
+            {
+                pincode.setError("pincode Required",errordrawable);
+            }
+            if(mileageno.isEmpty())
+            {
+                mileage.setError("Mileage required",errordrawable);
+            }
+            if(subserviceno.isEmpty())
+            {
+                subservice.setError("service Type Required",errordrawable);
+            }
+        }
+        else
+        {
+            Intent intent = new Intent(QuoteActivity.this,MapsActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -197,15 +269,38 @@ public class QuoteActivity extends AppCompatActivity {
 
     private void setupviews() {
 
+        errordrawable = getResources().getDrawable(R.drawable.error);
+        errordrawable.setBounds(0, 0, errordrawable.getIntrinsicWidth(), errordrawable.getIntrinsicHeight());
+
 
         vehicleName = (MaterialBetterSpinner)findViewById(R.id.vehicle);
+        vehicleName.setHintTextColor(Color.WHITE);
+        vehicleName.setTextColor(Color.WHITE);
+        vehicleName.setBackground(getDrawable(R.drawable.et_bg));
+
+
         serviceType = (MaterialBetterSpinner)findViewById(R.id.serviceType);
-        modelNo = (TextInputEditText)findViewById(R.id.modelNumber);
-        pincode = (TextInputEditText)findViewById(R.id.pincode);
+        serviceType.setHintTextColor(Color.WHITE);
+        serviceType.setTextColor(Color.WHITE);
+        serviceType.setBackground(getDrawable(R.drawable.et_bg));
+
+        
+        modelNo = (EditText)findViewById(R.id.modelNumber);
+        pincode = (EditText)findViewById(R.id.pincode);
         quoteBttn = (Button)findViewById(R.id.quoteBttn);
-        mileage = (TextInputEditText)findViewById(R.id.mileage);
+        mileage = (EditText)findViewById(R.id.mileage);
         carbutton = (ImageView)findViewById(R.id.carbutton);
+        
         subservice = (MaterialBetterSpinner)findViewById(R.id.subservice);
+        subservice.setHintTextColor(Color.WHITE);
+        subservice.setTextColor(Color.WHITE);
+        subservice.setBackground(getDrawable(R.drawable.et_bg));
+
+
+        headingText = (TextView)findViewById(R.id.Heading);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Adlery-Pro-trial.ttf");
+        headingText.setTypeface(typeface);
+
     }
 
     private ArrayAdapter<String> getArrayList(List<String> list) {

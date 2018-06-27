@@ -49,7 +49,7 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
     private RecyclerView recycleview;
     private List<mainlistfeed> feedList = new ArrayList<>();
     private MainlistAdapter mAdapter;
-    private static final Integer[] Images= {R.drawable.care2,R.drawable.care};
+    private static final Integer[] Images= {R.drawable.logonew,R.drawable.care2,R.drawable.care};
     private ArrayList<Integer> IMAGEArray = new ArrayList<Integer>();
     private static int currentPage = 0;
     private ViewPager mPager;
@@ -127,10 +127,10 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
     }
 
     private void preparefeedlist() {
-        mainlistfeed feeditem =new mainlistfeed(R.drawable.ic_menu_manage,"Search Workshops Near By","In need of a quality workshop,tap to explore");
+        mainlistfeed feeditem =new mainlistfeed(R.drawable.ic_menu_manage_white,"Request Quotes from Workshops ","Tap to explore");
         feedList.add(feeditem);
 
-        feeditem = new mainlistfeed(R.drawable.ic_menu_camera,"Add Your Service centre","Grow with us and let us grow");
+        feeditem = new mainlistfeed(R.drawable.home,"Add Your Service centre","Grow with us and let us grow");
         feedList.add(feeditem);
     }
 
@@ -159,7 +159,7 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_emergency) {
             return true;
         }
 
@@ -176,7 +176,12 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
             // Handle the camera action
         } else if (id == R.id.nav_profile) {
 
+            Intent intent = new Intent(QuoteMainActivity.this,UserProfileActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_call) {
+            Intent intent = new Intent(QuoteMainActivity.this,ContactActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_logout) {
 
@@ -184,7 +189,7 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Toast.makeText(getApplicationContext(),"Signed Out",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(QuoteMainActivity.this,LoginActivity.class);
+                    Intent intent = new Intent(QuoteMainActivity.this,StartActivity.class);
                     startActivity(intent);
                     finish();
                 }

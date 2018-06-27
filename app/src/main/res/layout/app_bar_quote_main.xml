@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:clickable="true"
-                    android:src="@drawable/whitecar"/>
+                    android:src="@drawable/error"/>
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 

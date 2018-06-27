@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_bottom_garage"
+        android:id="@+id/add_bottom_garage"
         android:enabled="true"
         android:title="Add Garage"
         android:icon="@drawable/car"
         app:showAsAction="ifRoom"
-
         />
 
 </menu>

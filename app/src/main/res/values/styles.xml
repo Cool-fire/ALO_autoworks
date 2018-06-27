@@ -6,15 +6,27 @@
         <item name="colorPrimary">@color/colorBluePrimary</item>
         <item name="colorPrimaryDark">@color/colorBlueDark</item>
         <item name="colorAccent">@color/colorBlueAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimaryRipple</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/colorwhite</item>
-        <item name="android:windowBackground">@drawable/background</item>
+        <item name="colorPrimaryDark">@color/colorBluePrimary</item>
+        <item name="colorPrimary">@color/colorBluePrimary</item>
+        <item name="colorAccent">@color/colorBlueAccent</item>
+        <item name="android:windowBackground">@drawable/splash</item>
 
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Autocomplete"  parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorHint">@color/colorwhite</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorwhite</item>
+        <item name="colorControlNormal">@color/colorwhite</item>
+        <item name="colorControlActivated">@color/colorwhite</item>
+    </style>
+
 </resources>

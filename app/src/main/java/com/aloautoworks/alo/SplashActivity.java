@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser==null)
         {
-            Intent intent = new Intent(this,signup.class);
+            Intent intent = new Intent(this,StartActivity.class);
             startActivity(intent);
             finish();
         }
@@ -99,7 +99,7 @@ public class SplashActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+                            Intent intent = new Intent(SplashActivity.this,StartActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -109,7 +109,7 @@ public class SplashActivity extends AppCompatActivity {
                 else if(!dataSnapshot.child("users").hasChild(uid))
                 {
                     Log.d("TAG", "onDataChange: else");
-                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(),StartActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -123,7 +123,7 @@ public class SplashActivity extends AppCompatActivity {
                 else
                 {
                     Log.d("TAG", "onDataChange: elseall");
-                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(),StartActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -131,7 +131,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+                Intent intent = new Intent(SplashActivity.this,StartActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:paddingBottom="20dp">
+        <LinearLayout
+            android:id="@+id/upper_linear"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/inner_relative">
+                <TextView
+                    android:id="@+id/centerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:text="Making Sense of Complexity"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+                <TextView
+                    android:layout_below="@+id/centerName"
+                    android:id="@+id/centerAddress"
+                    android:paddingTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bitcoin is an illusion,a mass hallucination
+so one hears.Its just numbers in cybers"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:maxLines="2"/>
+
+                <TextView
+                    android:layout_below="@+id/centerAddress"
+                    android:id="@+id/centerEmail"
+                    android:paddingTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bitcoin is an illusion"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:textColor="@android:color/white"
+                    android:maxLines="1"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:layout_toRightOf="@+id/upper_linear"
+            android:layout_toEndOf="@+id/upper_linear">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                android:paddingTop="20dp"
+                android:id="@+id/centerNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:text="Quote : 5000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#ffab40" />
+                <Button
+                    android:id="@+id/bookButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:textColor="@android:color/white"
+                    android:text="Book"
+                    android:background="@drawable/bt1_bg"
+                    android:layout_below="@+id/centerNumber"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+</RelativeLayout>
