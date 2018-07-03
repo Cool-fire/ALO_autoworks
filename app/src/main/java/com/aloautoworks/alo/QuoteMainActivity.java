@@ -1,6 +1,7 @@
 package com.aloautoworks.alo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -53,6 +55,7 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
     private ArrayList<Integer> IMAGEArray = new ArrayList<Integer>();
     private static int currentPage = 0;
     private ViewPager mPager;
+    private ImageView emergencyButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +127,16 @@ public class QuoteMainActivity extends AppCompatActivity implements NavigationVi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        emergencyButton = (ImageView)findViewById(R.id.emergencybutton);
+        emergencyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:1033"));
+                startActivity(intent);
+            }
+        });
     }
 
     private void preparefeedlist() {

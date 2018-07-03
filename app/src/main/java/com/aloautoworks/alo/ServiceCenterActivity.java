@@ -116,6 +116,12 @@ public class ServiceCenterActivity extends AppCompatActivity {
     private AlertDialog dialog1;
     private String subject;
     private String message;
+    private String vehiclename;
+    private String servicetype;
+    private String modelno;
+    private String pincodeno;
+    private String mileageno;
+    private String subserviceno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +131,15 @@ public class ServiceCenterActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Quotes");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorwhite));
+
+
+        Intent intent = getIntent();
+        vehiclename = intent.getStringExtra("vehiclename");
+        servicetype = intent.getStringExtra("servicetype");
+        modelno = intent.getStringExtra("modelno");
+        pincodeno = intent.getStringExtra("pincodeno");
+        mileageno = intent.getStringExtra("mileageno");
+        subserviceno = intent.getStringExtra("subservice");
 
         ListView listView=(ListView)findViewById(R.id.list);
         CustomAdapter customAdapter=new CustomAdapter();
@@ -214,8 +229,9 @@ public class ServiceCenterActivity extends AppCompatActivity {
 
     private void sendEmail(TextView centerName) {
         subject = "Regarding your booking at aloautoworks";
-        message = "Your have a quote from customer";
-        SendMail sm = new SendMail(this, "sainathreddy.k16@iiits.in", subject, message);
+        message = "You have a quote from customer with details"+"\n"+vehiclename+"\n"+modelno+"\n"+servicetype+"\n"+pincodeno+"\n"+mileageno+"\n"+subserviceno;
+        Log.d("TAG", "sendEmail: "+message);
+        SendMail sm = new SendMail(this, "upendrareddy2511@gmail.com", subject, message);
 
         //Executing sendmail to send email
         sm.execute();

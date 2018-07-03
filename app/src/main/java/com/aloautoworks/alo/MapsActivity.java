@@ -62,6 +62,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private OnLocationUpdatedListener locationListner;
     public Runnable locationRunnable;
     private ProgressBar progressBar;
+    private String vehiclename;
+    private String servicetype;
+    private String modelno;
+    private String pincodeno;
+    private String mileageno;
+    private String subserviceno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Intent intent = getIntent();
+        vehiclename = intent.getStringExtra("vehiclename");
+        servicetype = intent.getStringExtra("servicetype");
+        modelno = intent.getStringExtra("modelno");
+        pincodeno = intent.getStringExtra("pincodeno");
+        mileageno = intent.getStringExtra("mileageno");
+        subserviceno = intent.getStringExtra("subservice");
 
 
         progressBar = (ProgressBar)findViewById(R.id.progressBarDialog);
@@ -184,6 +198,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     public boolean onMarkerClick(Marker marker) {
 
                                         Intent intent = new Intent(MapsActivity.this,ServiceCenterActivity.class);
+                                        intent.putExtra("vehiclename",vehiclename);
+                                        intent.putExtra("servicetype",servicetype);
+                                        intent.putExtra("modelno",modelno);
+                                        intent.putExtra("pincodeno",pincodeno);
+                                        intent.putExtra("mileageno",mileageno);
+                                        intent.putExtra("subservice",subserviceno);
                                         startActivity(intent);
                                         return false;
                                     }

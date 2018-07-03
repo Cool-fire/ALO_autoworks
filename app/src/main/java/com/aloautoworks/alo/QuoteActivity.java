@@ -227,6 +227,12 @@ public class QuoteActivity extends AppCompatActivity {
         else
         {
             Intent intent = new Intent(QuoteActivity.this,MapsActivity.class);
+            intent.putExtra("vehiclename",vehiclename);
+            intent.putExtra("servicetype",servicetype);
+            intent.putExtra("modelno",modelno);
+            intent.putExtra("pincodeno",pincodeno);
+            intent.putExtra("mileageno",mileageno);
+            intent.putExtra("subservice",subserviceno);
             startActivity(intent);
         }
     }

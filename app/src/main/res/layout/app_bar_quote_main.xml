@@ -25,12 +25,12 @@
                 android:paddingRight="15dp">
 
                 <ImageView
-                    android:id="@+id/carbutton"
+                    android:id="@+id/emergencybutton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:clickable="true"
-                    android:src="@drawable/error"/>
+                    android:src="@drawable/ic_medical"/>
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
